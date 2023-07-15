@@ -1,5 +1,7 @@
 //import React from "react"; 
 import ContactRow from "./ContactRow";
+import { useEffect } from "react";
+import { useState } from "react";
 
 interface Contact{
     id:number,
@@ -7,11 +9,31 @@ interface Contact{
     phone:string,
     email:string;
 }
-interface ContactListProp{
-    contacts: Contact[];
-}
 
-export default function ContactList({contacts}: ContactListProp) { 
+const dummyContacts = [
+    { id: 1, name: "R2-D2", phone: "222-222-2222", email: "r2d2@droids.com" },
+    { id: 2, name: "C-3PO", phone: "333-333-3333", email: "c3po@droids.com" },
+    { id: 3, name: "BB-8", phone: "888-888-8888", email: "bb8@droids.com" },
+  ];
+
+export default function ContactList() { 
+    const API_URL = 'http://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users';
+    const [contacts, setContacts] = useState(dummyContacts);
+
+    
+    useEffect(()=>{
+        const sendRequest = async ()=>{
+            try{
+                const req:Response = await fetch(API_URL);
+                const resp = await req.json() as Contact[];
+                console.log(resp)
+                setContacts(resp);
+            } catch(e){
+                console.error(e);
+            }
+        }
+        void sendRequest();
+    },[])
 
   return ( 
         <table>
@@ -27,7 +49,7 @@ export default function ContactList({contacts}: ContactListProp) {
               <td>Phone</td>
             </tr>
             {
-               contacts.map((contact)=>{
+               contacts.map((contact:Contact)=>{
                 return <ContactRow 
                     key={contact.id} 
                     name={contact.name} 
