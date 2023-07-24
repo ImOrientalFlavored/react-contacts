@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { Contact } from "./ContactList";
 
 
@@ -32,5 +31,3 @@ export default function SelectedContactRow({contact, setSelectedContactID}:Selec
         </table>
     )
 }
-
-const ContactTable = styled.tbody;
