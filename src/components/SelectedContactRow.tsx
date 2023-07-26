@@ -1,6 +1,4 @@
 import { Contact } from "./ContactList";
-
-
 interface SelectedContactRowProp{
     contact:Contact,
     setSelectedContactID(x:number): void;

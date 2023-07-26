@@ -21,21 +21,21 @@ export interface Contact{
 
 
 export default function ContactList({activeContact, setSelectedContactID}:ContactListProp) { 
-    const API_URL = 'http://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users';
+    const API_URL = 'https://fsa-jsonplaceholder-69b5c48f1259.herokuapp.com/users';
     const [contacts, setContacts] = useState([] as Contact[]);
 
     useEffect(()=>{
-        const sendRequest = async ()=>{
+        const fetchContacts = async ()=>{
             try{
                 const req:Response = await fetch(API_URL);
                 const resp = await req.json() as Contact[];
                 console.log(resp)
                 setContacts(resp);
             } catch(e){
-                console.error(e);
+              console.error("there was a booboo fetching data " , e);
             }
         }
-        void sendRequest();
+        void fetchContacts();
     },[])
 
     const selectedContact = contacts[activeContact-1]
